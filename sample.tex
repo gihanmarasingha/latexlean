@@ -1,8 +1,7 @@
 \documentclass{article}
-\usepackage{fontspec}
+\usepackage{fontspec}   % font selection package for xelatex and lualatex
+\setmonofont{FreeMono}  % a free monospaced typeface
 \usepackage[outputdir=.build]{minted}
-\setmonofont{FreeMono}
-\usepackage{minted}
 \newmintinline[lean]{lean4}{bgcolor=white}
 \newminted[leancode]{lean4}{fontsize=\footnotesize}
 \usemintedstyle{tango}  % a nice, colorful theme
