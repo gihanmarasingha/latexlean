@@ -4,14 +4,17 @@
 \usepackage[outputdir=.build]{minted}
 \newmintinline[lean]{lean4}{bgcolor=white}
 \newminted[leancode]{lean4}{fontsize=\footnotesize}
-\usemintedstyle{tango}  % a nice, colorful theme
+\usemintedstyle{tango}  % a colourful theme
 
 
 \begin{document}
 
+Here is some inline lean \lean{0 ≤ b^2}. And a longer piece of Lean:
+
 \begin{leancode}
 example (h : x = (-b + √(b^2 - 4*c))/ 2)
   (k : 0 ≤ b^2 - 4 * c):  x^2 + b * x + c = 0 := by
+    sorry
 \end{leancode}
 
 \end{document}
