@@ -27,13 +27,13 @@ example, `brew font-freefont` for macOS with homebrew.
 
 The minted LaTeX package is required. To use it, add the following to your LaTeX preamble:
 
-        \usepackage{fontspec}   
-        \setmonofont{FreeMono}
-        
-        \usepackage[outputdir=.build]{minted}
-        \newmintinline[lean]{lean4}{bgcolor=white}
-        \newminted[leancode]{lean4}{fontsize=\footnotesize}
-        \usemintedstyle{tango}  % a colourful theme
+    \usepackage{fontspec}   
+    \setmonofont{FreeMono}
+    
+    \usepackage[outputdir=.build]{minted}
+    \newmintinline[lean]{lean4}{bgcolor=white}
+    \newminted[leancode]{lean4}{fontsize=\footnotesize}
+    \usemintedstyle{tango}  % a colourful theme
 
 The top two lines are needed for providing Unicode glyphs missing from the standard fonts. The
 second line chooses the FreeMono typeface from the GNU Free Font package.
@@ -52,14 +52,14 @@ per-directory basis by adding a `.latexmkrc` file in the relevant directory.
 For example, to ensure that all the auxiliary files are saved in a hidden directory called `.build`,
 just add the following
 
-        $aux_dir = '.build';
+    $aux_dir = '.build';
 
 I use the following command to specify how PDFs should be built.
 
-        $pdflatex = 'xelatex -synctex=1 -interaction=nonstopmode'
-          . '--shell-escape -file-line-error -verbose'
-          . '-output-directory=.'
-          . '-aux-directory=' . $aux_dir . ' %O %S';
+    $pdflatex = 'xelatex -synctex=1 -interaction=nonstopmode '
+      . '--shell-escape -file-line-error -verbose '
+      . '-output-directory=. '
+      . '-aux-directory=' . $aux_dir . ' %O %S';
 
 You can call latexmk using `latexmk -pdf myfile.tex` where `myfile.tex` is the name of your TeX
 file.
@@ -68,12 +68,26 @@ file.
 
 With the above definitions, Lean code can be inserted into your LaTeX file as follows:
 
-        Here is some inline lean \lean{0 ≤ b^2}. And a longer piece of Lean:
+    Here is some inline lean \lean{0 ≤ b^2}. And a longer piece of Lean:
 
-        \begin{leancode}
-        example (h : x = (-b + √(b^2 - 4*c))/ 2)
-          (k : 0 ≤ b^2 - 4 * c):  x^2 + b * x + c = 0 := by
-            sorry
-        \end{leancode}
+    \begin{leancode}
+    example (h : x = (-b + √(b^2 - 4*c))/ 2)
+      (k : 0 ≤ b^2 - 4 * c):  x^2 + b * x + c = 0 := by
+        sorry
+    \end{leancode}
 
+## Syntax highlighting in neovim with VimTeX
 
+If you're using neovim, then syntax highlighting is provided by the file `lean.vim` found in the
+[lean.nvim](https://github.com/Julian/lean.nvim) plugin. 
+
+The VimTeX plugin uses the name of the minted language to determine the correct vim syntax file to
+use. Unfortunately, the minted language `lean4` is not the same as the name (`lean`) of the syntax
+file. My hack to get around this is to create a symlink. First, you need to locate the `lean.vim`
+file on your system. From within neovim, you can do this via:
+
+    :echo findfile('syntax/lean.vim', &runtimepath)
+
+At the terminal, change to the directory containing the `lean.vim` file and make a symlink via:
+
+    ln -s lean.vim lean4.vim

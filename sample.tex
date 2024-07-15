@@ -2,19 +2,28 @@
 \usepackage{fontspec}   % font selection package for xelatex and lualatex
 \setmonofont{FreeMono}  % a free monospaced typeface
 \usepackage[outputdir=.build]{minted}
-\newmintinline[lean]{lean4}{bgcolor=white}
-\newminted[leancode]{lean4}{fontsize=\footnotesize}
+\newmintinline[lean]{lean}{bgcolor=white}
+\newminted[leancode]{lean}{fontsize=\footnotesize}
 \usemintedstyle{tango}  % a colourful theme
-
 
 \begin{document}
 
-Here is some inline lean \lean{0 ≤ b^2}. And a longer piece of Lean:
+Here is some inline lean \lean{0 ≤ b^2}.
+And a longer piece of Lean:
 
-\begin{leancode}
+\begin{minted}{lean}
 example (h : x = (-b + √(b^2 - 4*c))/ 2)
   (k : 0 ≤ b^2 - 4 * c):  x^2 + b * x + c = 0 := by
     sorry
+\end{minted}
+
+\begin{leancode}
+example : ∃ b : ℝ, ∀ x : ℝ, b ≤ x ^ 2 -:e  2 * x := by
+  use -1
+  intro x
+  calc
+    -1 ≤ -1 + (x - 1) ^ 2 := by extra
+    _ = x ^ 2 - 2 * x := by ring
 \end{leancode}
 
 \end{document}
